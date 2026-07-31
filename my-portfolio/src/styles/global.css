@@ -223,7 +223,7 @@ nav.sc2 { background:rgba(3,5,10,0.88); backdrop-filter:blur(24px); border-botto
 
 @media (max-width:1024px) {
   .hgrid { grid-template-columns:1fr !important; }
-  .hcard { display:none !important; }
+  .hcard { max-width: 420px; margin: 0 auto; width: 100%; }
   .expg { grid-template-columns:1fr !important; }
   .expa { display:none !important; }
   .fgrid { grid-template-columns:1fr !important; }

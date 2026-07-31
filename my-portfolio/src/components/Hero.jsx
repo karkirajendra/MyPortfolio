@@ -3,6 +3,7 @@ import { useTyped } from "../hooks/useTyped";
 import { useParallax } from "../hooks/useParallax";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
+import portrait from "../assets/rajendra-web.jpg";
 
 export default function Hero() {
   const typed = useTyped(["Full-Stack Developer", "MERN Stack Engineer", "Laravel Developer", "Vue.js Enthusiast", "Problem Solver"]);
@@ -58,19 +59,19 @@ export default function Hero() {
               style={{ background: "linear-gradient(135deg,var(--cyan),#0ea5e9)", color: "#000", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", boxShadow: "0 0 28px rgba(34,211,238,0.3)", gap: "0.4rem" }}>
               View Projects ↓
             </MagBtn>
-            <MagBtn href="/resume.pdf" download data-cursor="btn" onClickCapture={addRipple} className="hcbtn rbtn"
+            <MagBtn href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" data-cursor="btn" onClickCapture={addRipple} className="hcbtn rbtn"
               style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
               Resume ↓
             </MagBtn>
-            <MagBtn href="mailto:Karkirajenda22@gmail.com" className="hcbtn rbtn" onClickCapture={addRipple}
+            <MagBtn href="#contact" className="hcbtn rbtn" onClickCapture={addRipple}
               style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
               Say Hello →
             </MagBtn>
           </div>
 
           <div className="hsoc ha6" style={{ display: "flex", gap: "1.4rem", alignItems: "center" }}>
-            {[{ l: "GitHub", h: "https://github.com/karkirajendra" }, { l: "LinkedIn", h: "https://www.linkedin.com/in/rajendra-karki-316408279" }, { l: "Email", h: "mailto:Karkirajenda22@gmail.com" }].map(s => (
-              <a key={s.l} href={s.h} target={s.h.startsWith("mailto") ? undefined : "_blank"} rel="noreferrer"
+            {[{ l: "GitHub", h: "https://github.com/karkirajendra" }, { l: "LinkedIn", h: "https://www.linkedin.com/in/rajendra-karki-316408279" }, { l: "Email", h: "#contact" }].map(s => (
+              <a key={s.l} href={s.h} target={s.h.startsWith("http") ? "_blank" : undefined} rel={s.h.startsWith("http") ? "noreferrer" : undefined}
                 style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--dim)", textDecoration: "none", transition: "color 0.2s" }}
                 onMouseEnter={e => { e.target.style.color = "var(--cyan)"; }}
                 onMouseLeave={e => { e.target.style.color = "var(--dim)"; }}>
@@ -81,13 +82,29 @@ export default function Hero() {
         </div>
 
         <div className="hcard haC">
-          <div className="cd" style={{ padding: "1.6rem", backdropFilter: "blur(10px)" }}>
+          <div className="cd" style={{ padding: "1.2rem", backdropFilter: "blur(10px)" }}>
             <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at top right,rgba(34,211,238,0.07),transparent 60%)", pointerEvents: "none" }} />
             <div style={{ position: "relative" }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.4rem" }}>
-                <div style={{ position: "relative", marginBottom: "0.8rem" }}>
-                  <div style={{ position: "absolute", inset: -4, borderRadius: "22px", background: "linear-gradient(135deg,var(--cyan),var(--violet))", opacity: 0.28, filter: "blur(8px)", animation: "pulsate 3s ease-in-out infinite" }} />
-                  <div style={{ width: 72, height: 72, borderRadius: "18px", background: "linear-gradient(135deg,var(--cyan),#0ea5e9)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--fp)", fontSize: "1.5rem", fontWeight: 700, color: "#000", position: "relative", boxShadow: "0 0 24px rgba(34,211,238,0.4)" }}>RK</div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "1.2rem" }}>
+                <div style={{ position: "relative", marginBottom: "0.9rem", width: "100%" }}>
+                  <div style={{ position: "absolute", inset: -3, borderRadius: "18px", background: "linear-gradient(135deg,var(--cyan),var(--violet))", opacity: 0.35, filter: "blur(10px)", animation: "pulsate 3s ease-in-out infinite" }} />
+                  <img
+                    src={portrait}
+                    alt="Rajendra Karki"
+                    width={400}
+                    height={500}
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      aspectRatio: "4 / 5",
+                      objectFit: "cover",
+                      objectPosition: "center top",
+                      borderRadius: "16px",
+                      border: "1px solid rgba(34,211,238,0.25)",
+                      boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
+                      display: "block",
+                    }}
+                  />
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "var(--fd)", fontWeight: 700, color: "var(--txt)", fontSize: "0.95rem" }}>Rajendra Karki</div>

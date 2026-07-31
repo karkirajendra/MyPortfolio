@@ -25,10 +25,10 @@ export default function Nav({ active }) {
             <li key={id}><a href={`#${id}`} className={active === id ? "act" : ""}>{id}</a></li>
           ))}
           <li>
-            <MagBtn href="/resume.pdf" download className="hbtn-outline hnb" data-cursor="btn">Resume</MagBtn>
+            <MagBtn href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline hnb" data-cursor="btn">Resume</MagBtn>
           </li>
           <li>
-            <MagBtn href="mailto:Karkirajenda22@gmail.com" className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
+            <MagBtn href="#contact" className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
           </li>
         </ul>
         <button className="ham" onClick={() => setMob(o => !o)} aria-label="Toggle menu">
@@ -39,8 +39,8 @@ export default function Nav({ active }) {
       {mob && (
         <div className="mmenu" onClick={() => setMob(false)}>
           {navIds.map(id => <a key={id} href={`#${id}`}>{id}</a>)}
-          <a href="/resume.pdf" download className="hbtn-outline" style={{ fontSize: "0.8rem" }}>Resume</a>
-          <a href="mailto:Karkirajenda22@gmail.com" className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
+          <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline" style={{ fontSize: "0.8rem" }}>Resume</a>
+          <a href="#contact" className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
         </div>
       )}
     </>

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useCounter } from "../hooks/useCounter";
 import { useTilt } from "../hooks/useTilt";
+import portrait from "../assets/rajendra-web.jpg";
 
 export default function About() {
   const ref = useRef(null);
@@ -25,18 +26,37 @@ export default function About() {
   return (
     <section id="about" className="sec" ref={ref}>
       <div className="rv"><p className="eye">who I am</p><h2 className="stl">About Me</h2></div>
-      <div className="abgr rv" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "start" }}>
+      <div className="abgr rv" style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: "3rem", alignItems: "start" }}>
+        <div style={{ position: "relative" }}>
+          <div style={{ position: "absolute", inset: -4, borderRadius: "22px", background: "linear-gradient(135deg,var(--cyan),var(--violet))", opacity: 0.25, filter: "blur(12px)" }} />
+          <img
+            src={portrait}
+            alt="Rajendra Karki"
+            width={400}
+            height={500}
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: 380,
+              aspectRatio: "4 / 5",
+              objectFit: "cover",
+              objectPosition: "center top",
+              borderRadius: "18px",
+              border: "1px solid var(--bdr2)",
+              display: "block",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
+            }}
+          />
+        </div>
         <div>
           <p style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "var(--muted)", marginBottom: "1.1rem" }}>I'm a <strong style={{ color: "var(--txt)", fontWeight: 700 }}>motivated BCA student</strong> in my 7th semester at Tribhuvan University — with a passion for building web apps that people actually use.</p>
           <p style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--muted)", marginBottom: "1.1rem" }}>Deep experience with <strong style={{ color: "var(--cyan)" }}>MERN stack</strong>, <strong style={{ color: "var(--emerald)" }}>Laravel</strong>, and <strong style={{ color: "var(--violet)" }}>Vue.js</strong> — shipped multiple production-ready projects from rental platforms to booking systems.</p>
           <p style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--muted)", marginBottom: "1.5rem" }}>I thrive at the intersection of clean code and intuitive design, constantly leveling up my craft.</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.5rem" }}>
             {["★ MERN Stack Training — N9-Solution", "★ Git & GitHub Basics"].map(c => (
               <span key={c} className="pl" style={{ color: "var(--gold)", borderColor: "rgba(251,191,36,0.25)", background: "rgba(251,191,36,0.06)" }}>{c}</span>
             ))}
           </div>
-        </div>
-        <div>
           <div className="abst" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
             {[[c1 + "+", "Projects Shipped", "Full-stack production apps."], [c2 + "+", "API Endpoints", "Designed & documented."], [c3 + "th", "Semester", "Tribhuvan University, BCA."], [c4 + "+", "Years Coding", "Building and shipping daily."]].map(([v, l, d], i) => {
               const [tr, tm, tl] = tilts[i];
