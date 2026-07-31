@@ -50,7 +50,7 @@ async function buildResume() {
   y -= 18;
   drawText("Full-Stack Developer", left, y, 12, helvetica, accent);
   y -= 16;
-  drawText("Kathmandu, Nepal  ·  Karkirajenda22@gmail.com", left, y, 9, helvetica, muted);
+  drawText("Kathmandu, Nepal  ·  rajendrakarki0614@gmail.com", left, y, 9, helvetica, muted);
   y -= 12;
   drawText("github.com/karkirajendra  ·  linkedin.com/in/rajendra-karki-316408279", left, y, 9, helvetica, muted);
   y -= 22;

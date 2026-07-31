@@ -28,7 +28,7 @@ export default function Nav({ active }) {
             <MagBtn href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline hnb" data-cursor="btn">Resume</MagBtn>
           </li>
           <li>
-            <MagBtn href="#contact" className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
+            <MagBtn href="mailto:rajendrakarki0614@gmail.com" className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
           </li>
         </ul>
         <button className="ham" onClick={() => setMob(o => !o)} aria-label="Toggle menu">
@@ -40,7 +40,7 @@ export default function Nav({ active }) {
         <div className="mmenu" onClick={() => setMob(false)}>
           {navIds.map(id => <a key={id} href={`#${id}`}>{id}</a>)}
           <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline" style={{ fontSize: "0.8rem" }}>Resume</a>
-          <a href="#contact" className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
+          <a href="mailto:rajendrakarki0614@gmail.com" className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
         </div>
       )}
     </>

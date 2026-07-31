@@ -18,7 +18,7 @@ function ContactCard({ c }) {
 
 export default function Contact() {
   const contacts = [
-    { l: "Email", v: "Karkirajenda22@gmail.com", h: "mailto:Karkirajenda22@gmail.com" },
+    { l: "Email", v: "rajendrakarki0614@gmail.com", h: "mailto:rajendrakarki0614@gmail.com" },
     { l: "GitHub", v: "karkirajendra", h: "https://github.com/karkirajendra" },
     { l: "LinkedIn", v: "rajendra-karki", h: "https://www.linkedin.com/in/rajendra-karki-316408279" },
   ];
@@ -33,7 +33,7 @@ export default function Contact() {
       <div className="ctgr rv" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.9rem", maxWidth: 600, margin: "0 auto 2.5rem" }}>
         {contacts.map(c => <ContactCard key={c.l} c={c} />)}
       </div>
-      <MagBtn href="mailto:Karkirajenda22@gmail.com" className="rbtn" onClickCapture={addRipple}
+      <MagBtn href="mailto:rajendrakarki0614@gmail.com" className="rbtn" onClickCapture={addRipple}
         style={{ background: "linear-gradient(135deg,var(--cyan),#0ea5e9)", color: "#000", fontFamily: "var(--fm)", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, padding: "0.9rem 2.2rem", borderRadius: "10px", textDecoration: "none", boxShadow: "0 0 36px rgba(34,211,238,0.35)", gap: "0.5rem" }}>
         ✉ Say Hello
       </MagBtn>
