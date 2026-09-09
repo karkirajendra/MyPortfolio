@@ -1,11 +1,14 @@
 import { useTilt } from "../hooks/useTilt";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
+import { EMAIL, GMAIL_COMPOSE } from "../utils/email";
+
+const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
 
 function ContactCard({ c }) {
   const { ref, onMove, onLeave } = useTilt(7);
   return (
-    <a ref={ref} href={c.h} target={c.h.startsWith("mailto") ? undefined : "_blank"} rel="noreferrer"
+    <a ref={ref} href={c.h} {...(c.external ? emailLinkProps : {})}
       className="cd tilt-card" style={{ padding: "1.1rem", textDecoration: "none", display: "block" }} onMouseMove={onMove} onMouseLeave={onLeave}
       onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.3)"; e.currentTarget.style.background = "rgba(34,211,238,0.04)"; }}
       onMouseOut={e => { e.currentTarget.style.borderColor = "var(--bdr)"; e.currentTarget.style.background = "var(--surf)"; }}>
@@ -18,9 +21,9 @@ function ContactCard({ c }) {
 
 export default function Contact() {
   const contacts = [
-    { l: "Email", v: "rajendrakarki0614@gmail.com", h: "mailto:rajendrakarki0614@gmail.com" },
-    { l: "GitHub", v: "karkirajendra", h: "https://github.com/karkirajendra" },
-    { l: "LinkedIn", v: "rajendra-karki", h: "https://www.linkedin.com/in/rajendra-karki-316408279" },
+    { l: "Email", v: EMAIL, h: GMAIL_COMPOSE, external: true },
+    { l: "GitHub", v: "karkirajendra", h: "https://github.com/karkirajendra", external: true },
+    { l: "LinkedIn", v: "rajendra-karki", h: "https://www.linkedin.com/in/rajendra-karki-316408279", external: true },
   ];
 
   return (
@@ -33,7 +36,7 @@ export default function Contact() {
       <div className="ctgr rv" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.9rem", maxWidth: 600, margin: "0 auto 2.5rem" }}>
         {contacts.map(c => <ContactCard key={c.l} c={c} />)}
       </div>
-      <MagBtn href="mailto:rajendrakarki0614@gmail.com" className="rbtn" onClickCapture={addRipple}
+      <MagBtn href={GMAIL_COMPOSE} {...emailLinkProps} className="rbtn" onClickCapture={addRipple}
         style={{ background: "linear-gradient(135deg,var(--cyan),#0ea5e9)", color: "#000", fontFamily: "var(--fm)", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, padding: "0.9rem 2.2rem", borderRadius: "10px", textDecoration: "none", boxShadow: "0 0 36px rgba(34,211,238,0.35)", gap: "0.5rem" }}>
         ✉ Say Hello
       </MagBtn>

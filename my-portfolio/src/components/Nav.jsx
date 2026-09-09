@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import MagBtn from "./MagBtn";
+import { GMAIL_COMPOSE } from "../utils/email";
+
+const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
 
 const navIds = ["about", "skills", "process", "experience", "projects", "contact"];
 
@@ -28,7 +31,7 @@ export default function Nav({ active }) {
             <MagBtn href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline hnb" data-cursor="btn">Resume</MagBtn>
           </li>
           <li>
-            <MagBtn href="mailto:rajendrakarki0614@gmail.com" className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
+            <MagBtn href={GMAIL_COMPOSE} {...emailLinkProps} className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
           </li>
         </ul>
         <button className="ham" onClick={() => setMob(o => !o)} aria-label="Toggle menu">
@@ -40,7 +43,7 @@ export default function Nav({ active }) {
         <div className="mmenu" onClick={() => setMob(false)}>
           {navIds.map(id => <a key={id} href={`#${id}`}>{id}</a>)}
           <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline" style={{ fontSize: "0.8rem" }}>Resume</a>
-          <a href="mailto:rajendrakarki0614@gmail.com" className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
+          <a href={GMAIL_COMPOSE} {...emailLinkProps} className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
         </div>
       )}
     </>

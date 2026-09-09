@@ -128,6 +128,12 @@ nav.sc2 { background:rgba(3,5,10,0.88); backdrop-filter:blur(24px); border-botto
 .nlinks a::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:1px; background:var(--cyan); transform:scaleX(0); transform-origin:left; transition:transform 0.25s ease; }
 .nlinks a:hover,.nlinks a.act { color:var(--txt); }
 .nlinks a:hover::after,.nlinks a.act::after { transform:scaleX(1); }
+.hbtn, .hcbtn, .nlinks a, .hsoc a, .mmenu a { pointer-events: auto; cursor: pointer; }
+html.has-custom-cursor .hbtn,
+html.has-custom-cursor .hcbtn,
+html.has-custom-cursor .nlinks a,
+html.has-custom-cursor .hsoc a,
+html.has-custom-cursor .mmenu a { cursor: none; }
 .hbtn { font-family:var(--fm); font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#000; background:var(--cyan); padding:0.45rem 1rem; border-radius:6px; border:none; text-decoration:none; transition:all 0.2s; box-shadow:0 0 18px rgba(34,211,238,0.3); }
 .hbtn:hover { box-shadow:0 0 28px rgba(34,211,238,0.55); transform:translateY(-1px); }
 .hbtn-outline { font-family:var(--fm); font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--txt); background:transparent; padding:0.45rem 1rem; border-radius:6px; border:1px solid var(--bdr2); text-decoration:none; transition:all 0.2s; }

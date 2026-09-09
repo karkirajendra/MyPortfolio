@@ -4,6 +4,9 @@ import { useParallax } from "../hooks/useParallax";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
 import portrait from "../assets/rajendra-web.jpg";
+import { GMAIL_COMPOSE } from "../utils/email";
+
+const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
 
 export default function Hero() {
   const typed = useTyped(["Full-Stack Developer", "MERN Stack Engineer", "Laravel Developer", "Vue.js Enthusiast", "Problem Solver"]);
@@ -63,15 +66,15 @@ export default function Hero() {
               style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
               Resume ↓
             </MagBtn>
-            <MagBtn href="mailto:rajendrakarki0614@gmail.com" className="hcbtn rbtn" onClickCapture={addRipple}
+            <MagBtn href={GMAIL_COMPOSE} {...emailLinkProps} className="hcbtn rbtn" onClickCapture={addRipple}
               style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
               Say Hello →
             </MagBtn>
           </div>
 
           <div className="hsoc ha6" style={{ display: "flex", gap: "1.4rem", alignItems: "center" }}>
-            {[{ l: "GitHub", h: "https://github.com/karkirajendra" }, { l: "LinkedIn", h: "https://www.linkedin.com/in/rajendra-karki-316408279" }, { l: "Email", h: "mailto:rajendrakarki0614@gmail.com" }].map(s => (
-              <a key={s.l} href={s.h} target={s.h.startsWith("http") ? "_blank" : undefined} rel={s.h.startsWith("http") ? "noreferrer" : undefined}
+            {[{ l: "GitHub", h: "https://github.com/karkirajendra" }, { l: "LinkedIn", h: "https://www.linkedin.com/in/rajendra-karki-316408279" }, { l: "Email", h: GMAIL_COMPOSE }].map(s => (
+              <a key={s.l} href={s.h} {...emailLinkProps}
                 style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--dim)", textDecoration: "none", transition: "color 0.2s" }}
                 onMouseEnter={e => { e.target.style.color = "var(--cyan)"; }}
                 onMouseLeave={e => { e.target.style.color = "var(--dim)"; }}>

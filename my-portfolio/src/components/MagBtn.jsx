@@ -2,6 +2,11 @@ import { useRef } from "react";
 
 export default function MagBtn({ children, style, className, onClick, href, target, rel, onClickCapture, download }) {
   const btnRef = useRef(null);
+
+  const resetTransform = () => {
+    if (btnRef.current) btnRef.current.style.transform = "translate(0,0) scale(1)";
+  };
+
   const onMove = (e) => {
     const el = btnRef.current;
     if (!el) return;
@@ -12,19 +17,50 @@ export default function MagBtn({ children, style, className, onClick, href, targ
     const dy = (e.clientY - cy) * 0.28;
     el.style.transform = `translate(${dx}px, ${dy}px) scale(1.04)`;
   };
-  const onLeave = () => {
-    if (btnRef.current) btnRef.current.style.transform = "translate(0,0) scale(1)";
+
+  const baseStyle = {
+    transition: "transform 0.2s ease, box-shadow 0.25s ease",
+    display: "inline-flex",
+    alignItems: "center",
+    position: "relative",
+    zIndex: 1,
+    ...style,
   };
-  const baseStyle = { transition: "transform 0.2s ease, box-shadow 0.25s ease", display: "inline-flex", alignItems: "center", ...style };
 
   if (href) {
     return (
-      <a ref={btnRef} href={href} target={target} rel={rel} download={download} style={baseStyle} className={className}
-        onMouseMove={onMove} onMouseLeave={onLeave} onClick={onClick} onClickCapture={onClickCapture}>{children}</a>
+      <a
+        ref={btnRef}
+        href={href}
+        target={target}
+        rel={rel}
+        download={download}
+        style={baseStyle}
+        className={className}
+        onMouseMove={onMove}
+        onMouseLeave={resetTransform}
+        onMouseDown={resetTransform}
+        onClick={onClick}
+        onClickCapture={onClickCapture}
+      >
+        {children}
+      </a>
     );
   }
+
   return (
-    <button ref={btnRef} style={baseStyle} className={className}
-      onMouseMove={onMove} onMouseLeave={onLeave} onClick={onClick} onClickCapture={onClickCapture}>{children}</button>
+    <button
+      ref={btnRef}
+      type="button"
+      style={baseStyle}
+      className={className}
+      onMouseMove={onMove}
+      onMouseLeave={resetTransform}
+      onMouseDown={resetTransform}
+      onClick={onClick}
+      onClickCapture={onClickCapture}
+    >
+      {children}
+    </button>
   );
 }
