@@ -16,6 +16,11 @@ export default function ProjectModal({ p, onClose }) {
             onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--bdr2)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--bdr)"; }}>✕ close</MagBtn>
         </div>
+        {p.image && (
+          <div style={{ height: 220, borderRadius: 12, overflow: "hidden", marginBottom: "1.3rem", border: "1px solid var(--bdr)", position: "relative" }}>
+            <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        )}
         <p style={{ fontSize: "0.88rem", lineHeight: 1.72, color: "var(--muted)", marginBottom: "1.3rem" }}>{p.desc}</p>
         <div className="mdig" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem", marginBottom: "1.2rem" }}>
           {[["Problem", p.story?.problem], ["Solution", p.story?.solution]].map(([l, c]) => (

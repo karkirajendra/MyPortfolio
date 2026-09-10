@@ -1,9 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function EasterEgg({ onClose }) {
   const [exiting, setExiting] = useState(false);
-  const close = () => { setExiting(true); setTimeout(onClose, 350); };
-  useEffect(() => { const t = setTimeout(close, 8000); return () => clearTimeout(t); }, []);
+  const close = useCallback(() => {
+    setExiting(true);
+    setTimeout(onClose, 350);
+  }, [onClose]);
+
+  useEffect(() => {
+    const t = setTimeout(close, 8000);
+    return () => clearTimeout(t);
+  }, [close]);
 
   const chars = "RAJENDRA KARKI".split("");
   return (

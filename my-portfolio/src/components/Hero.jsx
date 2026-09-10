@@ -3,13 +3,18 @@ import { useTyped } from "../hooks/useTyped";
 import { useParallax } from "../hooks/useParallax";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
-import portrait from "../assets/rajendra-web.jpg";
-import { GMAIL_COMPOSE } from "../utils/email";
+import bundledPortrait from "../assets/rajendra-web.jpg";
+import { gmailCompose } from "../utils/portfolioHelpers";
 
 const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
 
-export default function Hero() {
-  const typed = useTyped(["Full-Stack Developer", "MERN Stack Engineer", "Laravel Developer", "Vue.js Enthusiast", "Problem Solver"]);
+export default function Hero({ site }) {
+  const roles = site.typedRoles?.length ? site.typedRoles : ["Full-Stack Developer"];
+  const typed = useTyped(roles);
+  const GMAIL_COMPOSE = gmailCompose(site.email);
+  const portrait = site.portraitUrl || bundledPortrait;
+  const fullName = `${site.firstName} ${site.lastName}`.trim();
+  const resumeHref = site.resumeUrl || `${import.meta.env.BASE_URL}resume.pdf`;
   const register = useParallax();
   const orbA = useRef(null);
   const orbB = useRef(null);
@@ -33,12 +38,12 @@ export default function Hero() {
         <div className="htxt">
           <div className="ha1" style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem", background: "rgba(52,211,153,0.07)", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "100px", padding: "0.32rem 0.9rem 0.32rem 0.55rem", marginBottom: "1.8rem" }}>
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--emerald)", boxShadow: "0 0 8px var(--emerald)", display: "block", animation: "pulsate 2s ease-in-out infinite" }} />
-            <span style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--emerald)" }}>Available for opportunities</span>
+            <span style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--emerald)" }}>{site.availableText}</span>
           </div>
 
           <div className="ha2">
-            <h1 className="hname" style={{ fontFamily: "var(--fp)", fontSize: "clamp(3.5rem,8vw,6.5rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 0.95, color: "var(--txt)", display: "block" }}>Rajendra</h1>
-            <h1 className="hname gt" style={{ fontFamily: "var(--fp)", fontSize: "clamp(3.5rem,8vw,6.5rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 0.95, display: "block", marginBottom: "1.2rem" }}>Karki</h1>
+            <h1 className="hname" style={{ fontFamily: "var(--fp)", fontSize: "clamp(3.5rem,8vw,6.5rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 0.95, color: "var(--txt)", display: "block" }}>{site.firstName}</h1>
+            <h1 className="hname gt" style={{ fontFamily: "var(--fp)", fontSize: "clamp(3.5rem,8vw,6.5rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 0.95, display: "block", marginBottom: "1.2rem" }}>{site.lastName}</h1>
           </div>
 
           <div className="ha3" style={{ display: "flex", alignItems: "center", height: "2rem", marginBottom: "1.3rem" }}>
@@ -48,11 +53,11 @@ export default function Hero() {
           </div>
 
           <p className="ha4" style={{ maxWidth: 470, fontSize: "1rem", lineHeight: 1.75, color: "var(--muted)", marginBottom: "1.5rem" }}>
-            Building production-ready web apps with clean UI and reliable backend workflows. Based in <span style={{ color: "var(--cyan)", fontWeight: 600 }}>Kathmandu, Nepal</span>.
+            {site.tagline} <span style={{ color: "var(--cyan)", fontWeight: 600 }}>{site.location}</span>.
           </p>
 
           <div className="htags ha4" style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", marginBottom: "2rem" }}>
-            {["MERN Stack", "Laravel", "Vue.js 3", "REST APIs"].map(t => (
+            {(site.tags || []).map(t => (
               <span key={t} className="pl" style={{ color: "var(--dim)", borderColor: "var(--bdr)", background: "rgba(255,255,255,0.02)" }}>{t}</span>
             ))}
           </div>
@@ -62,9 +67,13 @@ export default function Hero() {
               style={{ background: "linear-gradient(135deg,var(--cyan),#0ea5e9)", color: "#000", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", boxShadow: "0 0 28px rgba(34,211,238,0.3)", gap: "0.4rem" }}>
               View Projects ↓
             </MagBtn>
-            <MagBtn href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" data-cursor="btn" onClickCapture={addRipple} className="hcbtn rbtn"
+            <MagBtn href={resumeHref} target="_blank" rel="noopener noreferrer" data-cursor="btn" onClickCapture={addRipple} className="hcbtn rbtn"
               style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
-              Resume ↓
+              View CV ↗
+            </MagBtn>
+            <MagBtn href={resumeHref} download={site.resumeDownloadName || "Resume.pdf"} data-cursor="btn" onClickCapture={addRipple} className="hcbtn rbtn"
+              style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
+              Download CV ↓
             </MagBtn>
             <MagBtn href={GMAIL_COMPOSE} {...emailLinkProps} className="hcbtn rbtn" onClickCapture={addRipple}
               style={{ color: "var(--txt)", fontFamily: "var(--fm)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.12em", padding: "0.8rem 1.8rem", borderRadius: "9px", textDecoration: "none", border: "1px solid var(--bdr2)", gap: "0.4rem" }}>
@@ -73,7 +82,7 @@ export default function Hero() {
           </div>
 
           <div className="hsoc ha6" style={{ display: "flex", gap: "1.4rem", alignItems: "center" }}>
-            {[{ l: "GitHub", h: "https://github.com/karkirajendra" }, { l: "LinkedIn", h: "https://www.linkedin.com/in/rajendra-karki-316408279" }, { l: "Email", h: GMAIL_COMPOSE }].map(s => (
+            {[{ l: "GitHub", h: site.github }, { l: "LinkedIn", h: site.linkedin }, { l: "Email", h: GMAIL_COMPOSE }].map(s => (
               <a key={s.l} href={s.h} {...emailLinkProps}
                 style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--dim)", textDecoration: "none", transition: "color 0.2s" }}
                 onMouseEnter={e => { e.target.style.color = "var(--cyan)"; }}
@@ -93,7 +102,7 @@ export default function Hero() {
                   <div style={{ position: "absolute", inset: -3, borderRadius: "18px", background: "linear-gradient(135deg,var(--cyan),var(--violet))", opacity: 0.35, filter: "blur(10px)", animation: "pulsate 3s ease-in-out infinite" }} />
                   <img
                     src={portrait}
-                    alt="Rajendra Karki"
+                    alt={fullName}
                     width={400}
                     height={500}
                     style={{
@@ -110,12 +119,12 @@ export default function Hero() {
                   />
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "var(--fd)", fontWeight: 700, color: "var(--txt)", fontSize: "0.95rem" }}>Rajendra Karki</div>
-                  <div style={{ fontFamily: "var(--fm)", fontSize: "0.56rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "0.2rem" }}>Full-Stack Developer</div>
+                  <div style={{ fontFamily: "var(--fd)", fontWeight: 700, color: "var(--txt)", fontSize: "0.95rem" }}>{fullName}</div>
+                  <div style={{ fontFamily: "var(--fm)", fontSize: "0.56rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "0.2rem" }}>{site.role}</div>
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.6rem", marginBottom: "1rem" }}>
-                {[["4", "Projects"], ["50+", "APIs"], ["2+", "Years"]].map(([v, l]) => (
+                {(site.cardStats || []).map(({ value: v, label: l }) => (
                   <div key={l} style={{ background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: "0.7rem 0.3rem", textAlign: "center", border: "1px solid var(--bdr)", transition: "all 0.25s" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.25)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--bdr)"; e.currentTarget.style.transform = "translateY(0)"; }}>
@@ -124,7 +133,7 @@ export default function Hero() {
                   </div>
                 ))}
               </div>
-              {[["📍 Location", "Kathmandu, Nepal"], ["🎓 Education", "BCA 7th Sem · TU"]].map(([k, v]) => (
+              {[["📍 Location", site.location], ["🎓 Education", site.educationLine]].map(([k, v]) => (
                 <div key={k} style={{ background: "rgba(255,255,255,0.025)", borderRadius: 9, padding: "0.65rem 0.9rem", marginBottom: "0.5rem", border: "1px solid var(--bdr)" }}>
                   <div style={{ fontFamily: "var(--fm)", fontSize: "0.54rem", color: "var(--dim)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.2rem" }}>{k}</div>
                   <div style={{ fontSize: "0.82rem", color: "var(--txt)", fontWeight: 500 }}>{v}</div>
@@ -132,7 +141,7 @@ export default function Hero() {
               ))}
               <div style={{ background: "rgba(52,211,153,0.06)", borderRadius: 9, padding: "0.55rem 0.9rem", border: "1px solid rgba(52,211,153,0.18)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--emerald)", boxShadow: "0 0 8px var(--emerald)", display: "block", animation: "pulsate 2s infinite", flexShrink: 0 }} />
-                <span style={{ fontFamily: "var(--fm)", fontSize: "0.58rem", color: "var(--emerald)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Open to work</span>
+                <span style={{ fontFamily: "var(--fm)", fontSize: "0.58rem", color: "var(--emerald)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{site.openToWorkText}</span>
               </div>
             </div>
           </div>

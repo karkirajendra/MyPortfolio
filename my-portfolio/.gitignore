@@ -10,6 +10,13 @@ dist-ssr/
 .env.*
 !.env.example
 
+# Local CMS leftovers (legacy JSON store)
+server/data/cms.json
+server/data/*.tmp
+server/uploads/*
+!server/uploads/.gitkeep
+
+
 # Logs
 logs/
 *.log

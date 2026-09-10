@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { projects } from "../data/projects";
 import { useTilt } from "../hooks/useTilt";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
@@ -19,13 +18,13 @@ function FeatCard({ p, onOpen }) {
         <div className="fdesc" style={{ padding: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.9rem" }}>
             <span style={{ fontFamily: "var(--fm)", fontSize: "0.56rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "var(--dim)" }}>Featured · {p.num}</span>
-            <span className="pl" style={{ color: p.ca, borderColor: `${p.ca}35`, background: `${p.ca}0d`, fontSize: "0.52rem" }}>MERN Stack</span>
+            <span className="pl" style={{ color: p.ca, borderColor: `${p.ca}35`, background: `${p.ca}0d`, fontSize: "0.52rem" }}>{p.badge || "Featured"}</span>
           </div>
           <h3 style={{ fontFamily: "var(--fp)", fontSize: "clamp(1.6rem,3vw,2.2rem)", fontWeight: 800, color: "var(--txt)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>{p.title}</h3>
           <p style={{ fontFamily: "var(--fm)", fontSize: "0.62rem", textTransform: "uppercase", letterSpacing: "0.1em", color: p.ca, margin: "0.4rem 0 1rem" }}>{p.subtitle}</p>
           <p style={{ fontSize: "0.88rem", lineHeight: 1.72, color: "var(--muted)", marginBottom: "1.2rem" }}>{p.desc}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.38rem", marginBottom: "1.4rem" }}>
-            {p.tech.map((t, ti) => (
+            {(p.tech || []).map((t, ti) => (
               <span key={t} className="pl"
                 style={{ color: "var(--dim)", borderColor: "var(--bdr)", background: "rgba(255,255,255,0.025)", fontSize: "0.57rem", transition: `all 0.2s ${ti * 60}ms`, transform: techAnim ? "translateY(0)" : "translateY(4px)", opacity: techAnim ? 1 : 0.5 }}>{t}</span>
             ))}
@@ -47,6 +46,9 @@ function FeatCard({ p, onOpen }) {
         </div>
         <div className="fprv" style={{ borderLeft: "1px solid var(--bdr)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
           <div style={{ borderRadius: 12, overflow: "hidden", background: "var(--surf2)", border: "1px solid var(--bdr)", height: 160, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+            {p.image && (
+              <img src={p.image} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }} />
+            )}
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${p.ca}12,${p.cb}10)` }} />
             <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px)", backgroundSize: "18px 18px" }} />
             <div style={{ position: "absolute", inset: 0, padding: "1.2rem", fontFamily: "var(--fm)", fontSize: "0.58rem", lineHeight: 1.7, opacity: hov ? 1 : 0, transition: "opacity 0.4s ease 0.1s" }}>
@@ -106,6 +108,11 @@ function SmCard({ p, onOpen, i }) {
               onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--bdr)"; e.currentTarget.style.color = "var(--dim)"; e.currentTarget.style.transform = "rotate(0) scale(1)"; }}>↗</a>
           )}
         </div>
+        {p.image && (
+          <div style={{ height: 130, borderRadius: 8, overflow: "hidden", marginBottom: "0.9rem", border: "1px solid var(--bdr)", position: "relative" }}>
+            <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        )}
         <p style={{ fontSize: "0.83rem", lineHeight: 1.65, color: "var(--muted)", flex: 1 }}>{p.desc}</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", margin: "0.9rem 0" }}>
           {p.tech.map(t => <span key={t} className="pl" style={{ color: "var(--dim)", borderColor: "var(--bdr)", background: "rgba(255,255,255,0.02)", fontSize: "0.55rem" }}>{t}</span>)}
@@ -119,14 +126,15 @@ function SmCard({ p, onOpen, i }) {
   );
 }
 
-export default function Projects({ onOpen }) {
-  const feat = projects[0];
-  const rest = projects.slice(1);
+export default function Projects({ onOpen, items }) {
+  const projects = items?.length ? items : [];
+  const feat = projects.find((p) => p.featured) || projects[0];
+  const rest = projects.filter((p) => p !== feat);
 
   return (
     <section id="projects" className="sec">
       <div className="rv"><p className="eye">what I built</p><h2 className="stl">Projects</h2></div>
-      <div className="rv" style={{ marginBottom: "1.5rem" }}><FeatCard p={feat} onOpen={() => onOpen(feat)} /></div>
+      {feat && <div className="rv" style={{ marginBottom: "1.5rem" }}><FeatCard p={feat} onOpen={() => onOpen(feat)} /></div>}
       <div className="pjgr rv" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "1.1rem" }}>
         {rest.map((p, i) => <SmCard key={p.num} p={p} onOpen={() => onOpen(p)} i={i} />)}
       </div>

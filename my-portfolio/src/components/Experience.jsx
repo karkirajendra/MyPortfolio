@@ -1,4 +1,3 @@
-import { experience } from "../data/experience";
 import { useTilt } from "../hooks/useTilt";
 
 function ExperienceCard({ item, i }) {
@@ -27,7 +26,9 @@ function ExperienceCard({ item, i }) {
   );
 }
 
-export default function Experience() {
+export default function Experience({ items, focusAreas }) {
+  const experience = items || [];
+  const focus = focusAreas?.length ? focusAreas : [];
   return (
     <section id="experience" className="sec">
       <div className="rv"><p className="eye">my journey</p><h2 className="stl">Experience</h2></div>
@@ -40,17 +41,17 @@ export default function Experience() {
         <div className="expa cd rv fr" style={{ padding: "1.6rem", alignSelf: "start" }}>
           <span style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.22em", color: "var(--cyan)" }}>Focus Areas</span>
           <h3 style={{ fontFamily: "var(--fp)", fontSize: "1.3rem", fontWeight: 700, color: "var(--txt)", margin: "0.5rem 0 1.1rem" }}>What I care about</h3>
-          {[{ i: "◈", l: "Product UI", d: "Accessible, responsive, polished interfaces." }, { i: "◫", l: "APIs", d: "Pragmatic REST with auth & validation." }, { i: "⟳", l: "Delivery", d: "Fast iteration: Vite + Git + clean commits." }].map(f => (
-            <div key={f.l} style={{ background: "rgba(255,255,255,0.025)", borderRadius: 10, padding: "0.9rem", marginBottom: "0.6rem", border: "1px solid var(--bdr)", transition: "all 0.2s" }}
+          {focus.map(f => (
+            <div key={f.label} style={{ background: "rgba(255,255,255,0.025)", borderRadius: 10, padding: "0.9rem", marginBottom: "0.6rem", border: "1px solid var(--bdr)", transition: "all 0.2s" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.25)"; e.currentTarget.style.background = "rgba(34,211,238,0.04)"; e.currentTarget.style.transform = "translateX(4px)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--bdr)"; e.currentTarget.style.background = "rgba(255,255,255,0.025)"; e.currentTarget.style.transform = "translateX(0)"; }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
                 <span style={{ color: "var(--cyan)", fontSize: "0.85rem", transition: "transform 0.3s" }}
                   onMouseEnter={e => { e.target.style.transform = "rotate(15deg) scale(1.2)"; }}
-                  onMouseLeave={e => { e.target.style.transform = "rotate(0) scale(1)"; }}>{f.i}</span>
-                <span style={{ fontWeight: 600, color: "var(--txt)", fontSize: "0.88rem" }}>{f.l}</span>
+                  onMouseLeave={e => { e.target.style.transform = "rotate(0) scale(1)"; }}>{f.icon}</span>
+                <span style={{ fontWeight: 600, color: "var(--txt)", fontSize: "0.88rem" }}>{f.label}</span>
               </div>
-              <p style={{ color: "var(--muted)", fontSize: "0.8rem", lineHeight: 1.6 }}>{f.d}</p>
+              <p style={{ color: "var(--muted)", fontSize: "0.8rem", lineHeight: 1.6 }}>{f.desc}</p>
             </div>
           ))}
         </div>

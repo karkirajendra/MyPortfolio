@@ -1,7 +1,7 @@
 import { useTilt } from "../hooks/useTilt";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
-import { EMAIL, GMAIL_COMPOSE } from "../utils/email";
+import { gmailCompose } from "../utils/portfolioHelpers";
 
 const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
 
@@ -19,11 +19,12 @@ function ContactCard({ c }) {
   );
 }
 
-export default function Contact() {
+export default function Contact({ site }) {
+  const GMAIL_COMPOSE = gmailCompose(site.email);
   const contacts = [
-    { l: "Email", v: EMAIL, h: GMAIL_COMPOSE, external: true },
-    { l: "GitHub", v: "karkirajendra", h: "https://github.com/karkirajendra", external: true },
-    { l: "LinkedIn", v: "rajendra-karki", h: "https://www.linkedin.com/in/rajendra-karki-316408279", external: true },
+    { l: "Email", v: site.email, h: GMAIL_COMPOSE, external: true },
+    { l: "GitHub", v: site.githubLabel || site.github, h: site.github, external: true },
+    { l: "LinkedIn", v: site.linkedinLabel || site.linkedin, h: site.linkedin, external: true },
   ];
 
   return (
@@ -31,7 +32,7 @@ export default function Contact() {
       <div className="cglow" />
       <div className="rv"><p className="eye" style={{ justifyContent: "center" }}>get in touch</p><h2 className="stl">Let's Connect</h2></div>
       <p className="rv" style={{ maxWidth: 520, margin: "-1.5rem auto 2.5rem", fontSize: "1rem", lineHeight: 1.75, color: "var(--muted)" }}>
-        Actively looking for internship and entry-level developer opportunities. Have a project or role? Let's talk.
+        {site.contactBlurb}
       </p>
       <div className="ctgr rv" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.9rem", maxWidth: 600, margin: "0 auto 2.5rem" }}>
         {contacts.map(c => <ContactCard key={c.l} c={c} />)}

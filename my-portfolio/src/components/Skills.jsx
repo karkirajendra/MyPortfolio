@@ -1,8 +1,9 @@
-import { skillGroups } from "../data/skills";
+import { skillItems } from "../utils/portfolioHelpers";
 import { useTilt } from "../hooks/useTilt";
 
 function SkillCard({ label, col, bg, bd, items, gi }) {
   const { ref, onMove, onLeave } = useTilt(6);
+  const list = skillItems({ items });
   return (
     <div key={label} ref={ref} className={`cd tilt-card rv d${(gi % 4) + 1}`} style={{ padding: "1.4rem" }} onMouseMove={onMove} onMouseLeave={onLeave}>
       <div className="tilt-shine" />
@@ -10,16 +11,27 @@ function SkillCard({ label, col, bg, bd, items, gi }) {
         <span style={{ width: 7, height: 7, borderRadius: "50%", background: col, boxShadow: `0 0 8px ${col}`, animation: "pulsate 2.5s ease-in-out infinite" }} />
         <span style={{ fontFamily: "var(--fm)", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.2em", color: col }}>{label}</span>
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-        {items.map(sk => <span key={sk} className="pl" style={{ color: col, background: bg, borderColor: bd }}>{sk}</span>)}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+        {list.map((sk) => (
+          <div key={sk.name}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.28rem" }}>
+              <span className="pl" style={{ color: col, background: bg, borderColor: bd }}>{sk.name}</span>
+              <span style={{ fontFamily: "var(--fm)", fontSize: "0.55rem", color: "var(--dim)" }}>{sk.level}%</span>
+            </div>
+            <div style={{ height: 4, borderRadius: 99, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+              <div style={{ width: `${Math.max(0, Math.min(100, sk.level || 0))}%`, height: "100%", background: col, boxShadow: `0 0 10px ${col}` }} />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default function Skills() {
-  const all = skillGroups.flatMap(g => g.items.map(it => ({ it, col: g.col })));
-  const h = Math.ceil(all.length / 2);
+export default function Skills({ groups }) {
+  const skillGroups = groups?.length ? groups : [];
+  const all = skillGroups.flatMap((g) => skillItems(g).map((it) => ({ it: it.name, col: g.col })));
+  const h = Math.ceil(all.length / 2) || 1;
   const r1 = all.slice(0, h);
   const r2 = all.slice(h);
 

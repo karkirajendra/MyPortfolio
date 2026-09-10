@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import MagBtn from "./MagBtn";
-import { GMAIL_COMPOSE } from "../utils/email";
+import { navIds } from "../utils/navigation";
 
-const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
-
-const navIds = ["about", "skills", "process", "experience", "projects", "contact"];
-
-export default function Nav({ active }) {
+export default function Nav({ active, site, hasEducation, hasCertificates, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [mob, setMob] = useState(false);
+  const resumeHref = site?.resumeUrl || `${import.meta.env.BASE_URL}resume.pdf`;
+  const resumeName = site?.resumeDownloadName || "Resume.pdf";
+  const ids = navIds.filter((id) => {
+    if (id === "education" && hasEducation === false) return false;
+    if (id === "certificates" && hasCertificates === false) return false;
+    return true;
+  });
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -18,36 +21,71 @@ export default function Nav({ active }) {
 
   return (
     <>
-      <nav className={`flex items-center justify-between ${scrolled ? "sc2" : ""}`}>
+      <nav className={`portfolio-nav flex items-center justify-between ${scrolled ? "sc2" : ""}`}>
         <a href="#hero" className="nlogo">
-          <div className="lmark">RK</div>
-          <span>rajendra<span style={{ color: "var(--cyan)" }}>.</span>dev</span>
+          <div className="lmark">{site?.initials || "RK"}</div>
+          <span>{site?.brand || "rajendra.dev"}</span>
         </a>
         <ul className="nlinks flex items-center">
-          {navIds.map(id => (
+          {ids.map(id => (
             <li key={id}><a href={`#${id}`} className={active === id ? "act" : ""}>{id}</a></li>
           ))}
           <li>
-            <MagBtn href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline hnb" data-cursor="btn">Resume</MagBtn>
+            <MagBtn href={resumeHref} target="_blank" rel="noopener noreferrer" className="hbtn-outline hnb" data-cursor="btn">
+              View CV ↗
+            </MagBtn>
           </li>
           <li>
-            <MagBtn href={GMAIL_COMPOSE} {...emailLinkProps} className="hbtn hnb" data-cursor="btn">Hire Me</MagBtn>
+            <MagBtn href={resumeHref} download={resumeName} className="hbtn hnb" data-cursor="btn">
+              Download CV ↓
+            </MagBtn>
+          </li>
+          <li>
+            <button
+              className="pf-theme-btn hnb"
+              onClick={onToggleTheme}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              {theme === "dark" ? "☀️" : "🌙"}
+            </button>
           </li>
         </ul>
-        <button className="ham" onClick={() => setMob(o => !o)} aria-label="Toggle menu">
-          {[0, 1, 2].map(i => <span key={i} className={`hl${mob ? " op" : ""}`} />)}
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {/* Theme toggle: visible on mobile (when .hnb items are hidden) */}
+          <button
+            className="pf-theme-btn ham"
+            style={{ display: "none", border: "1px solid var(--bdr2)" }}
+            onClick={onToggleTheme}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
+          <button className="ham" onClick={() => setMob(o => !o)} aria-label="Toggle menu">
+            {[0, 1, 2].map(i => <span key={i} className={`hl${mob ? " op" : ""}`} />)}
+          </button>
+        </div>
       </nav>
 
       {mob && (
         <div className="mmenu" onClick={() => setMob(false)}>
-          {navIds.map(id => <a key={id} href={`#${id}`}>{id}</a>)}
-          <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Rajendra-Karki-Resume.pdf" className="hbtn-outline" style={{ fontSize: "0.8rem" }}>Resume</a>
-          <a href={GMAIL_COMPOSE} {...emailLinkProps} className="hbtn" style={{ fontSize: "0.8rem" }}>Hire Me</a>
+          {ids.map(id => <a key={id} href={`#${id}`}>{id}</a>)}
+          <a href={resumeHref} target="_blank" rel="noopener noreferrer" className="hbtn-outline" style={{ fontSize: "0.8rem" }}>
+            View CV ↗
+          </a>
+          <a href={resumeHref} download={resumeName} className="hbtn" style={{ fontSize: "0.8rem" }}>
+            Download CV ↓
+          </a>
+          <button
+            className="pf-theme-btn"
+            onClick={(e) => { e.stopPropagation(); onToggleTheme(); }}
+            style={{ fontSize: "1rem", padding: "0.5rem 1rem" }}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? "☀️ Light mode" : "🌙 Dark mode"}
+          </button>
         </div>
       )}
     </>
   );
 }
-
-export { navIds };

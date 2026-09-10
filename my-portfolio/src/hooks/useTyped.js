@@ -7,7 +7,8 @@ export function useTyped(words, speed = 80, pause = 1900) {
   const [del, setDel] = useState(false);
 
   useEffect(() => {
-    const w = words[wi];
+    if (!words?.length) return;
+    const w = words[wi] || "";
     const atE = !del && ci === w.length;
     const atS = del && ci === 0;
     const delay = atE ? pause : del ? speed / 2 : speed;
