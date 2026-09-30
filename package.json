@@ -1,0 +1,9 @@
+{
+  "name": "my-portfolio-root",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm --prefix my-portfolio install",
+    "build": "npm --prefix my-portfolio install && npm --prefix my-portfolio run build",
+    "start": "npm --prefix my-portfolio start"
+  }
+}

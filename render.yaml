@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: my-portfolio
+    env: node
+    rootDir: my-portfolio
+    buildCommand: npm install && npm run build
+    startCommand: npm start
