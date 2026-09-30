@@ -12,6 +12,8 @@ export function ContentProvider({ children }) {
     try {
       const res = await fetch(`${API_BASE}/api/content`);
       if (!res.ok) throw new Error("Failed to load content");
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) throw new Error("Non-JSON response");
       const data = await res.json();
       setContent({ ...fallback, ...data, site: { ...fallback.site, ...(data.site || {}) } });
       setFromApi(true);
@@ -29,6 +31,8 @@ export function ContentProvider({ children }) {
       try {
         const res = await fetch(`${API_BASE}/api/content`);
         if (!res.ok) throw new Error("Failed to fetch");
+        const contentType = res.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) throw new Error("Non-JSON response");
         const data = await res.json();
         if (active) {
           setContent({ ...fallback, ...data, site: { ...fallback.site, ...(data.site || {}) } });

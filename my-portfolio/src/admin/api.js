@@ -52,13 +52,28 @@ export async function api(path, opts = {}) {
   }
 
   const res = await fetch(`${API_BASE}/api${path}`, init);
-  const data = await res.json().catch(() => ({}));
+
+  const contentType = res.headers.get("content-type") || "";
+  let data;
+  if (contentType.includes("application/json")) {
+    data = await res.json().catch(() => ({}));
+  } else {
+    // Received HTML or non-JSON (e.g. SPA fallback index.html, proxy 404/502)
+    if (path !== "/auth/login") {
+      clearStoredToken();
+    }
+    const err = new Error(
+      `API returned non-JSON response (${res.status} ${res.statusText}). Check backend connection and VITE_API_URL.`
+    );
+    err.status = res.status;
+    throw err;
+  }
 
   if (!res.ok) {
     if (res.status === 401 && path !== "/auth/login") {
       clearStoredToken();
     }
-    const err = new Error(data.error || "Request failed");
+    const err = new Error(data.error || `Request failed (${res.status})`);
     err.status = res.status;
     throw err;
   }

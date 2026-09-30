@@ -6,6 +6,14 @@ dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), ".
 
 const isProd = process.env.NODE_ENV === "production";
 
+function resolveCorsOrigin(val) {
+  if (!val || val === "true" || val === "*") return true;
+  if (val.includes(",")) {
+    return val.split(",").map((s) => s.trim());
+  }
+  return val.trim();
+}
+
 export const config = {
   isProd,
   port: Number(process.env.PORT) || 3001,
@@ -15,7 +23,7 @@ export const config = {
   cookieName: "admin_token",
   adminEmail: (process.env.ADMIN_EMAIL || "admin@localhost").toLowerCase().trim(),
   adminPassword: process.env.ADMIN_PASSWORD || "ChangeMe123!",
-  corsOrigin: process.env.CORS_ORIGIN || true,
+  corsOrigin: resolveCorsOrigin(process.env.CORS_ORIGIN),
   uploadMaxBytes: 8 * 1024 * 1024,
   contentCacheMs: 5_000,
   workers: Number(process.env.WEB_CONCURRENCY) || 0,

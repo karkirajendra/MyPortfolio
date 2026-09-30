@@ -19,6 +19,20 @@ function Login() {
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
 
+  useEffect(() => {
+    let active = true;
+    api("/auth/me")
+      .then((user) => {
+        if (active && user && user.email) {
+          nav("/admin", { replace: true });
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [nav]);
+
   const submit = async (e) => {
     e.preventDefault();
     setBusy(true);
@@ -116,22 +130,34 @@ function Shell() {
   };
 
   useEffect(() => {
+    let active = true;
     (async () => {
       try {
         const user = await api("/auth/me");
-        setMe(user);
-        await load();
-        const health = await api("/health").catch(() => ({ ok: false }));
-        setDbStatus(health.ok ? "connected" : "down");
+        if (!active) return;
+        if (user && user.email) {
+          setMe(user);
+          await load();
+          const health = await api("/health").catch(() => ({ ok: false }));
+          if (active) setDbStatus(health.ok ? "connected" : "down");
+        } else {
+          clearStoredToken();
+          setMe(false);
+        }
       } catch {
-        setMe(false);
+        if (active) {
+          clearStoredToken();
+          setMe(false);
+        }
       }
     })();
+    return () => {
+      active = false;
+    };
   }, []);
 
-
   if (me === null) return <div className="adm-boot">Checking authentication…</div>;
-  if (me === false) return <Navigate to="/admin/login" replace />;
+  if (!me || !me.email) return <Navigate to="/admin/login" replace />;
   if (!content) return <div className="adm-boot">Loading content from MongoDB…</div>;
 
   const logout = async () => {
