@@ -8,19 +8,23 @@ import { invalidateContentCache } from "./content.js";
 export async function ensureSeeded({ resetAdmin = false, resetContent = false } = {}) {
   const email = config.adminEmail;
   const password = config.adminPassword;
-  const existingAdmin = await Admin.findOne({ email });
 
-  if (!existingAdmin) {
-    const passwordHash = await bcrypt.hash(password, 12);
-    await Admin.create({ email, passwordHash });
-    console.log(`  CMS seeded admin: ${email}`);
-    console.log(`  Default password: ${password}  (configured via ADMIN_PASSWORD)`);
-  } else if (resetAdmin) {
-    existingAdmin.passwordHash = await bcrypt.hash(password, 12);
-    await existingAdmin.save();
-    console.log(`  Admin password reset for ${email} to ${password}`);
+  if (!email || !password) {
+    console.warn("  [CMS WARNING] ADMIN_EMAIL or ADMIN_PASSWORD not configured in environment variables. Admin seed skipped.");
   } else {
-    console.log(`  Admin account ready: ${email}`);
+    const existingAdmin = await Admin.findOne({ email });
+
+    if (!existingAdmin) {
+      const passwordHash = await bcrypt.hash(password, 12);
+      await Admin.create({ email, passwordHash });
+      console.log(`  CMS seeded admin account for: ${email}`);
+    } else if (resetAdmin) {
+      existingAdmin.passwordHash = await bcrypt.hash(password, 12);
+      await existingAdmin.save();
+      console.log(`  Admin password reset completed for: ${email}`);
+    } else {
+      console.log(`  Admin account ready: ${email}`);
+    }
   }
 
   const existing = await Content.findOne({ key: "main" });

@@ -11,7 +11,8 @@ dist-ssr/
 !.env.example
 
 # Local CMS leftovers (legacy JSON store)
-server/data/cms.json
+server/data/*.json
+server/data/.*.json
 server/data/*.tmp
 server/uploads/*
 !server/uploads/.gitkeep

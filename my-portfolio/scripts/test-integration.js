@@ -34,10 +34,12 @@ async function runTests() {
     console.log(`✓ GET /api/content passed: ${contentJson.skills.length} skill groups, ${contentJson.education.length} education items, ${contentJson.projects.length} projects`);
 
     // 3. Auth login check
+    const testEmail = process.env.ADMIN_EMAIL || config.adminEmail;
+    const testPassword = process.env.ADMIN_PASSWORD || config.adminPassword;
     const loginRes = await fetch(`${baseUrl}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: "admin@localhost", password: "ChangeMe123!" }),
+      body: JSON.stringify({ email: testEmail, password: testPassword }),
     });
     const loginJson = await loginRes.json();
     if (loginRes.status !== 200 || !loginJson.token) {
@@ -51,7 +53,7 @@ async function runTests() {
       headers: { Authorization: `Bearer ${token}` },
     });
     const meJson = await meRes.json();
-    if (meRes.status !== 200 || meJson.email !== "admin@localhost") {
+    if (meRes.status !== 200 || meJson.email !== testEmail) {
       throw new Error(`Auth /me failed: ${JSON.stringify(meJson)}`);
     }
     console.log("✓ GET /api/auth/me passed with Bearer token:", meJson.email);

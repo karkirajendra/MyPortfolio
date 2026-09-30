@@ -1,13 +1,10 @@
-# App lives in my-portfolio/ (not the repo root)
 [build]
-  base = "my-portfolio"
   command = "npm run build"
   publish = "dist"
 
 [build.environment]
   SECRETS_SCAN_ENABLED = "false"
 
-# SPA fallback — always serve index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"

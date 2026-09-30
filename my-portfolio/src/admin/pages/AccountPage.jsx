@@ -120,7 +120,7 @@ export default function AccountPage() {
           npm run seed -- --reset-admin
         </pre>
         <p style={{ fontSize: ".75rem", color: "#64748b", marginTop: ".4rem" }}>
-          Default email: <code>admin@localhost</code>. Configurable via <code>ADMIN_EMAIL</code> and <code>ADMIN_PASSWORD</code> in <code>.env</code>.
+          Admin email and password are dynamically configured via <code>ADMIN_EMAIL</code> and <code>ADMIN_PASSWORD</code> in your environment variables.
         </p>
       </div>
     </section>

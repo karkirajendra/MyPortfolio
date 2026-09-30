@@ -10,6 +10,6 @@ npm run dev
 ```
 
 - Site: http://localhost:5173
-- Admin: http://localhost:5173/admin (`admin@localhost` / `ChangeMe123!`)
+- Admin: http://localhost:5173/admin (login with your configured ADMIN_EMAIL and ADMIN_PASSWORD in .env)
 
 MongoDB must be running (`MONGODB_URI` in `.env`).
