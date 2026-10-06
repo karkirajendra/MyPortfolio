@@ -18,6 +18,18 @@
   force = true
 
 [[redirects]]
+  from = "/auth/google"
+  to = "https://myportfolio-jv2c.onrender.com/auth/google"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/auth/google/*"
+  to = "https://myportfolio-jv2c.onrender.com/auth/google/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

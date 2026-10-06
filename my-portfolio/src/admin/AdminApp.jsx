@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, NavLink, Outlet, Route, Routes, useNavigate, useOutletContext } from "react-router-dom";
-import { api, clearStoredToken, setStoredToken } from "./api";
+import { api, clearStoredToken, consumeAuthTokenFromUrl, setStoredToken } from "./api";
 import "./admin.css";
 import SitePage from "./pages/SitePage";
 import SkillsPage from "./pages/SkillsPage";
@@ -20,6 +20,17 @@ function Login() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    consumeAuthTokenFromUrl();
+    const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get("error");
+    if (oauthError === "not_admin") {
+      setErr("That Google account is not allowed to administer this site.");
+    } else if (oauthError === "not_configured") {
+      setErr("Google sign-in is not configured on the server.");
+    } else if (oauthError && oauthError !== "token") {
+      setErr("Google sign-in failed. Try again, or use email and password.");
+    }
+
     let active = true;
     api("/auth/me")
       .then((user) => {
@@ -100,6 +111,11 @@ function Login() {
         <button type="submit" disabled={busy} className="adm-btn-primary">
           {busy ? "Authenticating…" : "Sign in →"}
         </button>
+
+        <p className="adm-sub" style={{ textAlign: "center", margin: "0.4rem 0" }}>or</p>
+        <a href="/auth/google" className="adm-btn ghost" style={{ textAlign: "center", textDecoration: "none" }}>
+          Continue with Google
+        </a>
       </form>
     </div>
   );
@@ -130,6 +146,7 @@ function Shell() {
   };
 
   useEffect(() => {
+    consumeAuthTokenFromUrl();
     let active = true;
     (async () => {
       try {

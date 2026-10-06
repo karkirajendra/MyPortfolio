@@ -9,6 +9,7 @@ import compression from "compression";
 import { config } from "./config.js";
 import { apiLimiter } from "./middleware/rateLimit.js";
 import { authRouter } from "./routes/auth.js";
+import { googleAuthRouter } from "./routes/googleAuth.js";
 import { publicRouter, registerUploadStream } from "./routes/public.js";
 import { adminRouter } from "./routes/admin.js";
 
@@ -40,13 +41,14 @@ export function createApp() {
   app.use("/api", publicRouter);
   app.use("/api/auth", authRouter);
   app.use("/api/admin", adminRouter);
+  app.use("/auth", googleAuthRouter);
   registerUploadStream(app);
 
   if (config.isProd) {
     const dist = path.join(rootDir, "dist");
     if (fs.existsSync(dist)) {
       app.use(express.static(dist));
-      app.get(/^(?!\/api\/|\/uploads\/).*/, (_req, res) => {
+      app.get(/^(?!\/api\/|\/uploads\/|\/auth\/).*/, (_req, res) => {
         res.sendFile(path.join(dist, "index.html"));
       });
     }

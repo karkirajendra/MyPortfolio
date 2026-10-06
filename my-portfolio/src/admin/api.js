@@ -22,6 +22,20 @@ export function setStoredToken(token) {
   }
 }
 
+export function consumeAuthTokenFromUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (!token) return;
+    setStoredToken(token);
+    params.delete("token");
+    const qs = params.toString();
+    window.history.replaceState({}, "", `${window.location.pathname}${qs ? `?${qs}` : ""}${window.location.hash}`);
+  } catch {
+    /* ignore */
+  }
+}
+
 export function clearStoredToken() {
   try {
     localStorage.removeItem(TOKEN_KEY);
