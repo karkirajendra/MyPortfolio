@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useCounter } from "../hooks/useCounter";
 import { useTilt } from "../hooks/useTilt";
 import bundledPortrait from "../assets/rajendra-web.jpg";
+import { mediaUrl } from "../utils/portfolioHelpers";
 
 function StatCard({ n, suffix, label, desc, vis, tilt }) {
   const [tr, tm, tl] = tilt;
@@ -19,7 +20,7 @@ function StatCard({ n, suffix, label, desc, vis, tilt }) {
 export default function About({ site, photos }) {
   const ref = useRef(null);
   const [vis, setVis] = useState(false);
-  const portrait = site.aboutPhotoUrl || site.portraitUrl || bundledPortrait;
+  const portrait = mediaUrl(site.aboutPhotoUrl || site.portraitUrl) || bundledPortrait;
   const fullName = `${site.firstName} ${site.lastName}`.trim();
   const gallery = (photos || []).filter((p) => p.slot === "gallery" || !p.slot);
 
@@ -62,7 +63,7 @@ export default function About({ site, photos }) {
           {gallery.length > 0 && (
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginTop: "0.8rem", maxWidth: 380 }}>
               {gallery.map((p) => (
-                <img key={p.id} src={p.url} alt={p.alt || ""} style={{ width: "100%", aspectRatio: "1", objectFit: "cover", borderRadius: 12, border: "1px solid var(--bdr)" }} />
+                <img key={p.id} src={mediaUrl(p.url)} alt={p.alt || ""} style={{ width: "100%", aspectRatio: "1", objectFit: "cover", borderRadius: 12, border: "1px solid var(--bdr)" }} />
               ))}
             </div>
           )}

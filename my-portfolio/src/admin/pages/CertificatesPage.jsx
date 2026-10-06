@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { api } from "../api";
+import { mediaUrl } from "../../utils/portfolioHelpers";
 
 function nid() {
   return `cert-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
@@ -284,7 +285,7 @@ export default function CertificatesPage({ certificates, onSave }) {
               >
                 {cert.imageUrl ? (
                   <img
-                    src={cert.imageUrl}
+                    src={mediaUrl(cert.imageUrl)}
                     alt={cert.title}
                     style={{
                       width: "100%",
@@ -539,7 +540,7 @@ export default function CertificatesPage({ certificates, onSave }) {
                         }}
                       >
                         <img
-                          src={imagePreview}
+                          src={mediaUrl(imagePreview)}
                           alt="Preview"
                           style={{
                             maxWidth: "100%",
@@ -704,7 +705,7 @@ export default function CertificatesPage({ certificates, onSave }) {
               }}
             >
               <img
-                src={viewItem.imageUrl}
+                src={mediaUrl(viewItem.imageUrl)}
                 alt={viewItem.title}
                 style={{
                   maxWidth: "100%",

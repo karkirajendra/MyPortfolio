@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../api";
+import { mediaUrl } from "../../utils/portfolioHelpers";
 
 const COLOR_PRESETS = [
   { label: "Cyan/Sky", ca: "#22d3ee", cb: "#0ea5e9" },
@@ -368,7 +369,7 @@ export default function ProjectsPage({ projects, onSave }) {
               {p.image && (
                 <div style={{ display: "flex", alignItems: "center", gap: ".8rem" }}>
                   <img
-                    src={p.image}
+                    src={mediaUrl(p.image)}
                     alt=""
                     style={{ height: 60, width: 100, objectFit: "cover", borderRadius: 6, border: "1px solid rgba(255,255,255,.2)" }}
                   />

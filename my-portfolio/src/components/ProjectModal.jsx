@@ -1,5 +1,6 @@
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
+import { mediaUrl } from "../utils/portfolioHelpers";
 
 export default function ProjectModal({ p, onClose }) {
   return (
@@ -18,7 +19,7 @@ export default function ProjectModal({ p, onClose }) {
         </div>
         {p.image && (
           <div style={{ height: 220, borderRadius: 12, overflow: "hidden", marginBottom: "1.3rem", border: "1px solid var(--bdr)", position: "relative" }}>
-            <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={mediaUrl(p.image)} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
         )}
         <p style={{ fontSize: "0.88rem", lineHeight: 1.72, color: "var(--muted)", marginBottom: "1.3rem" }}>{p.desc}</p>

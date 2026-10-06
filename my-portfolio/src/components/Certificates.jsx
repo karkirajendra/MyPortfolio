@@ -2,6 +2,7 @@
 import { useTilt } from "../hooks/useTilt";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
+import { mediaUrl } from "../utils/portfolioHelpers";
 
 function CertCard({ cert, i, onOpen }) {
   const [hov, setHov] = useState(false);
@@ -84,7 +85,7 @@ function CertCard({ cert, i, onOpen }) {
             onClick={() => onOpen(cert)}
           >
             <img
-              src={cert.imageUrl}
+              src={mediaUrl(cert.imageUrl)}
               alt={cert.title}
               style={{
                 maxWidth: "100%",
@@ -362,7 +363,7 @@ export default function Certificates({ items }) {
                 }}
               >
                 <img
-                  src={modalCert.imageUrl}
+                  src={mediaUrl(modalCert.imageUrl)}
                   alt={modalCert.title}
                   style={{
                     maxWidth: "100%",
@@ -423,7 +424,7 @@ export default function Certificates({ items }) {
                 )}
                 {modalCert.imageUrl && (
                   <a
-                    href={modalCert.imageUrl}
+                    href={mediaUrl(modalCert.imageUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hbtn-outline"

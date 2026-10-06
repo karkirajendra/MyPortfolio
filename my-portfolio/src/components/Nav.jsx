@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import MagBtn from "./MagBtn";
 import { navIds } from "../utils/navigation";
+import { mediaUrl } from "../utils/portfolioHelpers";
 
 export default function Nav({ active, site, hasEducation, hasCertificates, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [mob, setMob] = useState(false);
-  const resumeHref = site?.resumeUrl || `${import.meta.env.BASE_URL}resume.pdf`;
+  const resumeHref = mediaUrl(site?.resumeUrl) || `${import.meta.env.BASE_URL}resume.pdf`;
   const resumeName = site?.resumeDownloadName || "Resume.pdf";
   const ids = navIds.filter((id) => {
     if (id === "education" && hasEducation === false) return false;

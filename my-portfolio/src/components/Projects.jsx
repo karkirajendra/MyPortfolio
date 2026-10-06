@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTilt } from "../hooks/useTilt";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
+import { mediaUrl } from "../utils/portfolioHelpers";
 
 function FeatCard({ p, onOpen }) {
   const [hov, setHov] = useState(false);
@@ -47,7 +48,7 @@ function FeatCard({ p, onOpen }) {
         <div className="fprv" style={{ borderLeft: "1px solid var(--bdr)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
           <div style={{ borderRadius: 12, overflow: "hidden", background: "var(--surf2)", border: "1px solid var(--bdr)", height: 160, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
             {p.image && (
-              <img src={p.image} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }} />
+              <img src={mediaUrl(p.image)} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }} />
             )}
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${p.ca}12,${p.cb}10)` }} />
             <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px)", backgroundSize: "18px 18px" }} />
@@ -110,7 +111,7 @@ function SmCard({ p, onOpen, i }) {
         </div>
         {p.image && (
           <div style={{ height: 130, borderRadius: 8, overflow: "hidden", marginBottom: "0.9rem", border: "1px solid var(--bdr)", position: "relative" }}>
-            <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={mediaUrl(p.image)} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
         )}
         <p style={{ fontSize: "0.83rem", lineHeight: 1.65, color: "var(--muted)", flex: 1 }}>{p.desc}</p>

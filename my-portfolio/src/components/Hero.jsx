@@ -4,7 +4,7 @@ import { useParallax } from "../hooks/useParallax";
 import { addRipple } from "../utils/ripple";
 import MagBtn from "./MagBtn";
 import bundledPortrait from "../assets/rajendra-web.jpg";
-import { gmailCompose } from "../utils/portfolioHelpers";
+import { gmailCompose, mediaUrl } from "../utils/portfolioHelpers";
 
 const emailLinkProps = { target: "_blank", rel: "noopener noreferrer" };
 
@@ -12,9 +12,9 @@ export default function Hero({ site }) {
   const roles = site.typedRoles?.length ? site.typedRoles : ["Full-Stack Developer"];
   const typed = useTyped(roles);
   const GMAIL_COMPOSE = gmailCompose(site.email);
-  const portrait = site.portraitUrl || bundledPortrait;
+  const portrait = mediaUrl(site.portraitUrl) || bundledPortrait;
   const fullName = `${site.firstName} ${site.lastName}`.trim();
-  const resumeHref = site.resumeUrl || `${import.meta.env.BASE_URL}resume.pdf`;
+  const resumeHref = mediaUrl(site.resumeUrl) || `${import.meta.env.BASE_URL}resume.pdf`;
   const register = useParallax();
   const orbA = useRef(null);
   const orbB = useRef(null);

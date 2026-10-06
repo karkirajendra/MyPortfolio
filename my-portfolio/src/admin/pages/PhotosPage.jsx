@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../api";
+import { mediaUrl } from "../../utils/portfolioHelpers";
 
 export default function PhotosPage({ content, onReload, onSave }) {
   const [msg, setMsg] = useState("");
@@ -89,7 +90,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
           {content.site?.portraitUrl ? (
             <div style={{ position: "relative" }}>
               <img
-                src={content.site.portraitUrl}
+                src={mediaUrl(content.site.portraitUrl)}
                 alt="Portrait"
                 style={{ width: 140, height: 175, objectFit: "cover", borderRadius: 12, border: "1px solid rgba(34,211,238,.3)" }}
               />
@@ -146,7 +147,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
           {content.site?.aboutPhotoUrl ? (
             <div style={{ position: "relative" }}>
               <img
-                src={content.site.aboutPhotoUrl}
+                src={mediaUrl(content.site.aboutPhotoUrl)}
                 alt="About"
                 style={{ width: 140, height: 175, objectFit: "cover", borderRadius: 12, border: "1px solid rgba(34,211,238,.3)" }}
               />
@@ -202,7 +203,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
           {content.site?.resumeUrl && (
             <div className="adm-item-actions">
               <a
-                href={content.site.resumeUrl}
+                href={mediaUrl(content.site.resumeUrl)}
                 target="_blank"
                 rel="noreferrer"
                 className="adm-btn ghost"
@@ -211,7 +212,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
                 👁 View PDF
               </a>
               <a
-                href={content.site.resumeUrl}
+                href={mediaUrl(content.site.resumeUrl)}
                 download={resumeName}
                 className="adm-btn-primary"
                 style={{ fontSize: ".8rem", textDecoration: "none", padding: ".45rem .85rem" }}
@@ -230,7 +231,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
                 {content.site.resumeUrl}
               </span>
               <a
-                href={content.site.resumeUrl}
+                href={mediaUrl(content.site.resumeUrl)}
                 target="_blank"
                 rel="noreferrer"
                 style={{ fontSize: ".72rem", color: "var(--adm-accent)", textDecoration: "none", fontWeight: 600 }}
@@ -239,7 +240,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
               </a>
             </div>
             <iframe
-              src={content.site.resumeUrl}
+              src={mediaUrl(content.site.resumeUrl)}
               title="CV Preview"
               style={{ width: "100%", height: 480, border: 0, display: "block", background: "#fff" }}
             />
@@ -311,7 +312,7 @@ export default function PhotosPage({ content, onReload, onSave }) {
         <div className="adm-photos" style={{ marginTop: "1.2rem" }}>
           {(content.photos || []).map((p) => (
             <div key={p.id} className="adm-photo-card">
-              <img src={p.url} alt={p.alt} />
+              <img src={mediaUrl(p.url)} alt={p.alt} />
               <div style={{ padding: ".6rem" }}>
                 <p style={{ fontSize: ".75rem", color: "#94a3b8", margin: "0 0 .4rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                   {p.alt || "No description"}
